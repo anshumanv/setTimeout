@@ -4,6 +4,8 @@ const endTime = document.querySelector('.display__end-time');
 const timerButtons = document.querySelectorAll('.timer__button');
 const timeForm = document.querySelector('#custom');
 
+
+// Function that handles our counter
 function timer(seconds) {
 	const now = Date.now();
 	const then = now + seconds * 1000;
@@ -20,6 +22,8 @@ function timer(seconds) {
 	}, 1000)
 }
 
+
+// Function to display the remaining time
 function displayTimeLeft(seconds) {
 	const minutes = Math.floor(seconds / 60);
 	const remainderSeconds = seconds % 60;
@@ -28,6 +32,7 @@ function displayTimeLeft(seconds) {
 	document.title = display;
 }
 
+// Function to display time of return
 function displayEndTime(timestamp) {
 	const end = new Date(timestamp);
 	const hours = end.getHours();
@@ -35,6 +40,8 @@ function displayEndTime(timestamp) {
 	endTime.textContent = `Be Back At - ${hours}:${minutes}`;
 }
 
+
+// Listening for various events
 timerButtons.forEach(timerButton => timerButton.addEventListener('click', () => {
 	clearInterval(countdown);
 	timer(timerButton.dataset['time']);
