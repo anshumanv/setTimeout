@@ -2,11 +2,13 @@ let countdown;
 const timerDisplay = document.querySelector('.display__time-left');
 const endTime = document.querySelector('.display__end-time');
 const timerButtons = document.querySelectorAll('.timer__button');
-const timeForm = document.querySelector('#custom');
-
 
 // Function that handles our counter
 function timer(seconds) {
+
+	// Reset any ongoing timers
+	clearInterval(countdown);
+
 	const now = Date.now();
 	const then = now + seconds * 1000;
 	displayTimeLeft(seconds);
@@ -37,23 +39,21 @@ function displayEndTime(timestamp) {
 	const end = new Date(timestamp);
 	const hours = end.getHours();
 	const minutes = end.getMinutes();
-	endTime.textContent = `Be Back At - ${hours}:${minutes}`;
+	endTime.textContent = `Be Back At - ${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
 }
 
 
 // Listening for various events
 timerButtons.forEach(timerButton => timerButton.addEventListener('click', () => {
-	clearInterval(countdown);
 	timer(timerButton.dataset['time']);
 }));
 
-timeForm.addEventListener('submit', (e) => {
-	clearInterval(countdown);
+document.customForm.addEventListener('submit', function(e) {
 	e.preventDefault();
-	const textField = timeForm.querySelector('input');
-	if (textField.value > 0){
-		timer(textField.value * 60);
+	if(this.minutes.value > 0){
+		timer(this.minutes.value * 60);
 	} else {
 		alert('Invalid Input');
 	}
+	this.reset();
 });
