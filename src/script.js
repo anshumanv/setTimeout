@@ -32,6 +32,8 @@ function displayTimeLeft(seconds) {
 	const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
 	timerDisplay.textContent = display;
 	document.title = display;
+	if (minutes == 0 && remainderSeconds == 0)
+		document.title = "Time's Up !";
 }
 
 // Function to display time of return
