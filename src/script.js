@@ -27,12 +27,13 @@ function timer(seconds) {
 
 // Function to display the remaining time
 function displayTimeLeft(seconds) {
+	const hour = Math.floor(seconds / 3600);
 	const minutes = Math.floor(seconds / 60);
 	const remainderSeconds = seconds % 60;
-	const display = `${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
+	const display = `${hour < 10 ? '0' : ''}${hour}:${minutes < 10 ? '0' : ''}${minutes}:${remainderSeconds < 10 ? '0' : ''}${remainderSeconds}`;
 	timerDisplay.textContent = display;
 	document.title = display;
-	if (minutes == 0 && remainderSeconds == 0)
+	if (hour == 0 && minutes == 0 && remainderSeconds == 0)
 		document.title = "Time's Up !";
 }
 
