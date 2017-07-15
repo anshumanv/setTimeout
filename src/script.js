@@ -48,6 +48,7 @@ timerButtons.forEach(timerButton => timerButton.addEventListener('click', () => 
 }));
 
 timeForm.addEventListener('submit', (e) => {
+	clearInterval(countdown);
 	e.preventDefault();
 	const textField = timeForm.querySelector('input');
 	if (textField.value > 0){
