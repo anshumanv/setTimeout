@@ -2,13 +2,45 @@ let countdown;
 const timerDisplay = document.querySelector('.display__time-left');
 const endTime = document.querySelector('.display__end-time');
 const timerButtons = document.querySelectorAll('.timer__button');
+var audio = new Audio("AMemoryAway.ogg") ;
 
+//audio.oncanplaythrough = function(){
+//audio.play();
+//}
+//
+//
+//audio.onended = function(){
+//audio.play();
+//}
 // Function that handles our counter
+    function notifyMe() {
+  // Let's check if the browser supports notifications
+    if (!("Notification" in window)) {
+    alert("This browser does not support desktop notification");
+  }
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification("Time's Up!");
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== "denied") {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification("Time's Up!");
+      }
+    });
+  }
+}
+
 function timer(seconds) {
 
 	// Reset any ongoing timers
 	clearInterval(countdown);
-
+    audio.pause();
+    audio.currentTime = 0;
 	const now = Date.now();
 	const then = now + seconds * 1000;
 	displayTimeLeft(seconds);
@@ -34,7 +66,11 @@ function displayTimeLeft(seconds) {
 	timerDisplay.textContent = display;
 	document.title = display;
 	if (hour == 0 && minutes == 0 && remainderSeconds == 0)
-		document.title = "Time's Up !";
+		{
+            document.title = "Time's Up !";
+            notifyMe();
+            audio.play();
+        }
 }
 
 // Function to display time of return
